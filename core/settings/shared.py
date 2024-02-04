@@ -2,7 +2,7 @@
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app.apps.AppConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -88,3 +89,5 @@ STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 STATIC_ROOT = Path(BASE_DIR / "staticfiles")
 MEDIA_ROOT = Path(BASE_DIR / "mediafiles")
+
+AUTH_USER_MODEL = "users.User"
