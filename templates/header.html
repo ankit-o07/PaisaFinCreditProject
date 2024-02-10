@@ -10,12 +10,30 @@
                     <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Home</a></li>
                     <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">About</a></li>
                     <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Contact</a></li>
+                    {% if request.user.is_authenticated %}
+                    
+                        {% if request.user.is_superuser %}
+                            <li class="text-white bg-blue-500  no-underline py-2 px-5 rounded-lg mx-3 my-3">
+                                <a href="">Dashboard</a>
+                            </li>
+                        {% else %}
+                        <li
+                            class="text-white bg-blue-500  no-underline py-2 px-5 rounded-lg mx-3 my-3">
+                            <a href="">Dashboard</a>
+                        </li>
+                        {% endif %}
+                    {% else %}
                     <li
-                        class="text-black md:text-white md:bg-black no-underline hover:text-black-200 hover:text-underline md:py-2 md:px-5 rounded-lg">
-                        <a href="#">Apply Now</a></li>
+                        class="text-white bg-black no-underline py-2 px-5 rounded-lg">
+                        <a href="{% url 'register' %}">Apply Now</a>
+                    </li>
+                    
                     <li
-                        class="text-black md:text-white md:bg-blue-500  no-underline hover:text-black-200 hover:text-underline md:py-2 md:px-5 rounded-lg md:mx-3 md:my-3">
-                        <a href="#">Login</a></li>
+                        class="text-white bg-blue-500  no-underline py-2 px-5 rounded-lg mx-3 my-3">
+                        <a href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+
                 </ul>
             </div>
             <div class="flex items-center gap-2">
@@ -32,12 +50,17 @@
     </nav>
 </header>
 
-<div id="navLinks" class="duration-300 md:hidden absolute w-2/3 h-full bg-white flex gap-8 left-[-100%] p-5 z-100">
-    <ul class="flex flex-col gap-8">
+<div id="navLinks" class="duration-300 md:hidden absolute w-2/3 h-full bg-white flex gap-8 left-[-100%] p-5 z-50">
+    <ul class="flex flex-col gap-4">
         <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Home</a></li>
         <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">About</a></li>
         <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Contact</a></li>
-        <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Apply Now</a></li>
+        <li class="max-w-fit md:pr-0 py-2 text-white bg-black no-underline rounded-xl px-5">
+            <a href="#">Apply Now</a>
+        </li>
+        <li class="max-w-fit md:pr-0 py-2 text-white bg-blue-500 no-underline rounded-xl px-5">
+            <a href="#">Login</a>
+        </li>
         <li class="max-w-fit pr-3 md:pr-0 py-1 "><a href="#">Contact</a></li>
     </ul>
 </div>
