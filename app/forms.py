@@ -1,6 +1,5 @@
 from django import forms
 from django.utils.translation import gettext as _
-from django.core.exceptions import ValidationError
 from .models import User
 from .models import PersonalDetails
 
@@ -87,39 +86,3 @@ class PersonalDetailForm(forms.ModelForm):
         model = PersonalDetails
         fields = ['first_name', 'last_name']
 
-
-# from django.shortcuts import render, redirect
-# from .forms import RegistrationForm
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             user_form = form.cleaned_data['user']
-#             personal_detail_form = form.cleaned_data['personal_detail']
-
-#             # Save the User instance and get the created user
-#             user = user_form.save()
-
-#             # Set the user of the PersonalDetail instance and save it
-#             personal_detail = personal_detail_form.save(commit=False)
-#             personal_detail.user = user
-#             personal_detail.save()
-
-#             return redirect('home')
-#     else:
-#         form = RegistrationForm()
-
-#     return render(request, 'register.html', {'form': form})
-    
-# html ussage of the form
-# <form method="post">
-#     {% csrf_token %}
-#     {{ form.user.phone }}
-#     {{ form.user.password1 }}
-#     {{ form.user.terms_accepted }}
-#     {{ form.personal_detail.first_name }}
-#     {{ form.personal_detail.last_name }}
-#     <button type="submit">Register</button>
-# </form>
-    
