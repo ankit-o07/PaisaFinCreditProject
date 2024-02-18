@@ -39,7 +39,7 @@ def register_user(request):
 
 def register_com(request):
     user = request.user
-    user_detail = PersonalDetails.objects.filter(user=user).first() 
+    user_detail = PersonalDetails.objects.filter(user=user.id).first() 
     personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
     
     if request.method == 'POST':
