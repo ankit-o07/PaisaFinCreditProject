@@ -1,30 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" class="h-svh ">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="flex flex-col mx-auto h-full max-w-[1920px] relative">
-    
-    <header class=" relative px-4 bg-white z-101">
-        <nav class="flex justify-between px-12 py-4 my-2 lg:mx-20 xl:mx-36 bg-gray-900 text-white rounded-lg">
+
+    <header class=" relative px-4 py-2 sm:bg-white z-101 bg-gray-900 sm:bg-none">
+        <nav
+            class="flex justify-between sm:px-12 sm:py-4 sm:my-2 lg:mx-20 xl:mx-24 bg-gray-900 text-white sm:rounded-lg">
             <div class="w-36 flex items-center">
                 <img class="" src="/static/images/Logo-w.svg" alt="LOGO" srcset="">
             </div>
-
             <div class="flex items-center">
-                <p>Vivek</p>
+                <p class="py-2 px-4 bg-white bg-opacity-5 rounded-lg cursor-pointer select-none"
+                    onclick="onMenuToggle()">Vivek</p>
                 <div class="flex items ml-2 relative">
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500 absolute right-1 border"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                            d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
+                            clip-rule="evenodd" />
                     </svg>
                 </div>
             </div>
         </nav>
     </header>
+
+    <div class="relative flex sm:gap-2 lg:mx-20 xl:mx-24 sm:px-4 min-h-screen">
+        <div class="h-full relative flex w-fit justify-between bg-gray-900 text-white sm:rounded-lg">
+            <ul class="gap-2 w-full">
+                <li class="w-full" id="menu">
+                    <a class="p-2 sm:p-4 flex items-center m-3 rounded-md bg-blue-500 bg-opacity-10" href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-8 h-8 sm:mr-4 text-blue-400">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                        </svg>
+                        <p class="whitespace-nowrap hidden sm:block text-blue-400">Personal Details</p>
+                    </a>
+                </li>
+                <li class="w-full" id="menu">
+                    <a class="p-2 sm:p-4 flex items-center m-3 rounded-md hover:bg-blue-500 hover:bg-opacity-10"
+                        href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-8 h-8 sm:mr-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                        </svg>
+                        <p class="whitespace-nowrap hidden md:block">Offers</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="w-full  rounded-lg">
+            <div class="grid grid-cols-1 xl:grid-cols-2 sm:gap-4">
+                <div class="h-64 p-4 bg-white">
+                    <h2 class="text-3xl font-medium">Personal Details</h2>
+
+                    <div class="">
+                        <div class="form-container">
+                            <form action="">
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="first-name">First Name</label>
+                                        <input type="text" id="first-name" class="p-2 border
+                                        border-gray-300 rounded-md" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="last-name">Last Name</label>
+                                        <input type="text" id="last-name" class="p-2 border
+                                        border-gray-300 rounded-md" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="pan-number">PAN Number</label>
+                                        <input type="text" id="pan-number" class="p-2 border
+                                        border-gray-300 rounded-md" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="name">Pin Code</label>
+                                        <input type="text" id="name" class="p-2 border
+                                        border-gray-300 rounded-md" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-64 ">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div id="navLinks" class="duration-300 md:hidden absolute w-2/3 h-full bg-white flex gap-8 left-[-100%] p-5 z-50">
         <ul class="flex flex-col gap-4">
@@ -53,7 +131,6 @@
             cross.classList.toggle("hidden")
         }
     </script>
-
-
 </body>
-</html> 
+
+</html>
