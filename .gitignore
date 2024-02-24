@@ -137,3 +137,4 @@ node_modules/
 
 # pem files
 *.pem
+config.json
