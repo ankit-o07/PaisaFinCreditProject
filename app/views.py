@@ -43,12 +43,7 @@ def register_com(request):
     personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
     
     if request.method == 'POST':
-        
-        print(personal_details_form.is_valid())
-        print(request)
-        print(personal_details_form.errors)
         if personal_details_form.is_valid():
-            
             personal_detail = personal_details_form.save(commit=False)
             personal_detail.user = user
             
