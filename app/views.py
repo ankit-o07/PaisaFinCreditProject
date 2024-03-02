@@ -48,20 +48,12 @@ def register_com(request):
             personal_detail.user = user
             
             personal_detail.save()
+            messages.success(request, "Personal details saved successfully")
             return redirect('address')
-        else:
-            print("form is not valid")
-    else:
-        personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
+        
+    personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
 
-    context = {
-    'personal_details_form': personal_details_form,
-    "first_name": user_detail.first_name if user_detail else '',
-    'last_name': user_detail.last_name if user_detail else '',
-    }
-
-
-    
+    context = {'personal_details_form': personal_details_form}
     return render(request, 'app/registration/registerCom.html', context)
 
 def login_user(request):

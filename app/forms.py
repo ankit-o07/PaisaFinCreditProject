@@ -243,21 +243,18 @@ class AddressDetailForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'placeholder': _(''),
             'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-            'id': 'last_name',
+            'id': 'current_address',
             'required': 'true',
             'type': 'text',
         })
     )
 
 
-    current_address_Proof = forms.CharField(
+    current_address_proof = forms.ImageField(
         label=_('Current Address Proof'),
-        widget=forms.TextInput(attrs={
-            'placeholder': _(''),
-            'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent  appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-            'id': 'last_name',
-            'required': 'true',
-            'type': 'file',
+        widget=forms.FileInput(attrs={
+            'class': 'p-2 border border-gray-300 rounded-md',
+            'id': 'current_address_proof',
         })
     )
 
@@ -267,27 +264,24 @@ class AddressDetailForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'placeholder': _(''),
             'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-            'id': 'last_name',
+            'id': 'permanent_address',
             'required': 'true',
             'type': 'text',
         })
     )
 
 
-    permanent_address_Proof = forms.CharField(
+    permanent_address_proof = forms.ImageField(
         label=_('Permanent Address Proof'),
-        widget=forms.TextInput(attrs={
-            'placeholder': _(''),
-            'class': 'block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent  appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer',
-            'id': 'last_name',
-            'required': 'true',
-            'type': 'file',
+        widget=forms.FileInput(attrs={
+            'class': 'p-2 border border-gray-300 rounded-md',
+            'id': 'permanent_address_proof',
         })
     )
 
     class Meta:
         model = AddressDetails  
-        fields = ['current_address', 'current_address_Proof', 'permanent_address', 'permanent_address_Proof']
+        fields = ['current_address', 'current_address_proof', 'permanent_address', 'permanent_address_proof']
 
 
 
