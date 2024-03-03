@@ -36,7 +36,7 @@ def register_user(request):
         personal_detail_form = PersonalDetailForm()
     return render(request, 'app/registration/register.html', {'user_form': user_form, 'personal_detail_form': personal_detail_form})
 
-
+@login_required(login_url='login')
 def register_com(request):
     user = request.user
     user_detail = PersonalDetails.objects.filter(user=user.id).first() 
@@ -50,8 +50,6 @@ def register_com(request):
             personal_detail.save()
             messages.success(request, "Personal details saved successfully")
             return redirect('address')
-        
-    personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
 
     context = {'personal_details_form': personal_details_form}
     return render(request, 'app/registration/registerCom.html', context)
@@ -89,42 +87,37 @@ def generate_otp(request, phone):
             return JsonResponse({'message': 'OTP sent to your phone number'})
     return JsonResponse({'error': 'Invalid phone number'})
 
-
-
+@login_required(login_url='login')
 def logout_user(request):
     messages.info(request, "Logged out successfully")
     logout(request)
     return redirect('/')
 
+@login_required(login_url='login')
 def changePassword(request):
     return render(request, 'app/registration/changePassword.html')
 
+@login_required(login_url='login')
 def address(request):
-    address_form = AddressDetailForm()  
+    user = request.user
+    address_details = AddressDetails.objects.filter(user=user.id).first()
+    address_form = AddressDetailForm(request.POST or None, instance=address_details)
 
     if request.method == "POST":
-        address_form = AddressDetailForm(request.POST)  
-        print(address_form.errors) 
-
+        address_form = AddressDetailForm(request.POST, request.FILES, instance=address_details)
         if address_form.is_valid(): 
-            user = request.user  
-            if user is not None:
-                personal_detail = PersonalDetails.objects.get(user=user)  
-            else:
-                return HttpResponse("User not found")
-
-            address_instance = address_form.save(commit=False)  
-            address_instance.user = user 
-            address_instance.save()  
+            address_instance = address_form.save(commit=False)
+            address_instance.user = user
+            # address_instance.save()
+            address_form.save()
 
             messages.success(request, "Address details added successfully")
             return redirect('bank')  
 
-    context = {
-        "address_form": address_form,  
-    }
+    context = {"address_form": address_form, 'address_details': address_details}
     return render(request, 'app/registration/address.html', context)  
-    
+
+@login_required(login_url='login')
 def bankDetail(request):
     
 
@@ -144,5 +137,3 @@ def bankDetail(request):
         "bank_form": bank_form,
     }
     return render(request, 'app/registration/bank.html', context)
-
-
