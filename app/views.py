@@ -108,8 +108,7 @@ def address(request):
         if address_form.is_valid(): 
             address_instance = address_form.save(commit=False)
             address_instance.user = user
-            # address_instance.save()
-            address_form.save()
+            address_instance.save()
 
             messages.success(request, "Address details added successfully")
             return redirect('bank')  
@@ -119,21 +118,18 @@ def address(request):
 
 @login_required(login_url='login')
 def bankDetail(request):
-    
-
-    bank_form = BankDetailForm(request.POST or None)
-    print(bank_form.errors) 
+    user = request.user
+    bank_details = BankDetails.objects.filter(user=user.id).first()
+    bank_form = BankDetailForm(request.POST or None, instance=bank_details)
     if request.method == "POST":
+        bank_form = BankDetailForm(request.POST, request.FILES, instance=bank_details)
         if bank_form.is_valid():
-            user = request.user  
-            personal_detail = PersonalDetails.objects.get(user=request.user)
-            bank_form.instance.user = request.user
-            bank_form.instance.user = user 
-            bank_form.save()
+            bank_instance = bank_form.save(commit=False)
+            bank_instance.user = user
+            bank_instance.save()
+
             messages.success(request, "Bank details added successfully")
-            return redirect('home')  
-    
-    context = {
-        "bank_form": bank_form,
-    }
+            return redirect('dashboard-home')
+
+    context = { "bank_form": bank_form, 'bank_details': bank_details}
     return render(request, 'app/registration/bank.html', context)

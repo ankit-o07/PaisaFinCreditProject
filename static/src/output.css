@@ -731,6 +731,11 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
@@ -739,11 +744,6 @@ video {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .mb-2 {
@@ -1547,6 +1547,11 @@ video {
   color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -1614,24 +1619,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-200 {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
-}
-
-.text-gray-100 {
-  --tw-text-opacity: 1;
-  color: rgb(243 244 246 / var(--tw-text-opacity));
-}
-
-.text-opacity-30 {
-  --tw-text-opacity: 0.3;
-}
-
-.text-opacity-5 {
-  --tw-text-opacity: 0.05;
 }
 
 .underline {
@@ -2077,6 +2064,11 @@ input[type=number] {
     margin: 4rem;
   }
 
+  .md\:mx-16 {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
   .md\:mx-3 {
     margin-left: 0.75rem;
     margin-right: 0.75rem;
@@ -2085,11 +2077,6 @@ input[type=number] {
   .md\:my-3 {
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
-  }
-
-  .md\:mx-16 {
-    margin-left: 4rem;
-    margin-right: 4rem;
   }
 
   .md\:flex {
