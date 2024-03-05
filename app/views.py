@@ -44,9 +44,7 @@ def register_com(request):
     
     if request.method == 'POST':
         
-        print(personal_details_form.is_valid())
-        print(request)
-        print(personal_details_form.errors)
+        
         if personal_details_form.is_valid():
             
             personal_detail = personal_details_form.save(commit=False)
