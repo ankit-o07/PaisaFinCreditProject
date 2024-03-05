@@ -32,6 +32,8 @@ def update_personal_details(request):
         personal_details = PersonalDetails.objects.filter(user=user.id).first()
         personal_form = PersonalDetailForm(request.POST, instance=personal_details)
         if personal_form.is_valid():
+            personal_details = personal_form.save(commit=False)
+            personal_details.user = user
             personal_form.save()
             messages.success(request, "Personal Details Updated Successfully")
         else:
@@ -68,3 +70,11 @@ def update_bank_details(request):
         else:
             messages.error(request, "Error Updating Bank Details")
         return redirect('dashboard-home')
+
+@login_required(login_url="login")
+def application(request):
+    return render(request, "dashboard/application.html")
+
+@login_required(login_url="login")
+def offers(request):
+    return render(request, "dashboard/offers.html")
