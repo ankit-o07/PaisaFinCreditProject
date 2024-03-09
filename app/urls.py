@@ -7,7 +7,8 @@ from .views import (register_user,
                     bankDetail, 
                     forgot_password, 
                     logout_user,
-                    index,)
+                    index,
+                    generate_otp)
 
 urlpatterns = [
     path("", index, name="home"),
@@ -18,5 +19,6 @@ urlpatterns = [
     path("changepassword/",changePassword, name="changepassword"),
     path("address/",address, name="address"),
     path("bank/",bankDetail, name="bank"),
+    path("generateotp/", generate_otp, name="generateotp"),
     path("registercom/", register_com, name="registerCom"),
 ]

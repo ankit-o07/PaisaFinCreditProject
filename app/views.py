@@ -7,6 +7,7 @@ from .models import PersonalDetails , BankDetails , AddressDetails
 import random
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import json, time
 
 def index(request):
     return render(request, 'app/index.html')
@@ -76,16 +77,22 @@ def forgot_password(request):
     
     return render(request, 'app/registration/forgotPassword.html')
 
-def generate_otp(request, phone):
-    otp = ''.join([str(random.randrange(0,10)) for i in range(6)])
-    if 15 >= phone.isdigit() and len(phone) >= 10:
-        user = User.objects.filter(phone=phone).first()
-
-        if user:
-            user.otp = otp
-            user.save()
-            return JsonResponse({'message': 'OTP sent to your phone number'})
-    return JsonResponse({'error': 'Invalid phone number'})
+def generate_otp(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        phone = data.get('phone')
+        otp = ''.join([str(random.randrange(0,10)) for i in range(6)])
+        if 15 >= phone.isdigit() and len(phone) >= 10:
+            user = User.objects.filter(phone=phone).first()
+            if user:
+                print(time.time() - user.updated_at.timestamp(), "\n\n")
+                if (time.time() - user.updated_at.timestamp()) < 60:
+                    return JsonResponse({'error': 'You can only request for OTP once in a minute'})
+                user.otp = otp
+                user.save()
+                return JsonResponse({'message': 'OTP sent to your phone number'})
+        return JsonResponse({'error': 'Invalid phone number'})
+    return JsonResponse({'error': 'Invalid request'})
 
 @login_required(login_url='login')
 def logout_user(request):
