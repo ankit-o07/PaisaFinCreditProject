@@ -8,6 +8,7 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json, time
+from django.contrib.auth.forms import PasswordChangeForm
 
 def index(request):
     return render(request, 'app/index.html')
@@ -74,6 +75,18 @@ def login_user(request):
     return render(request, 'app/registration/login.html', {'error': error})
 
 def forgot_password(request):
+    if request.method == 'POST':
+        # print("request.POST", request.POST, "\n\n")
+        otp = request.POST.getlist('otp')[0]
+        phone = request.POST.getlist('phone')[0]
+        user = User.objects.filter(phone=phone).first()
+        if user and time.time() - user.updated_at.timestamp() > 300:
+            messages.error(request, "OTP expired, please request for another OTP")
+            return redirect('forgotpassword')
+        if user and user.otp == str(otp):
+            return redirect('changepassword')
+        else:
+            messages.error(request, "OTP does not match")
     
     return render(request, 'app/registration/forgotPassword.html')
 
@@ -85,12 +98,11 @@ def generate_otp(request):
         if 15 >= phone.isdigit() and len(phone) >= 10:
             user = User.objects.filter(phone=phone).first()
             if user:
-                print(time.time() - user.updated_at.timestamp(), "\n\n")
                 if (time.time() - user.updated_at.timestamp()) < 60:
                     return JsonResponse({'error': 'You can only request for OTP once in a minute'})
                 user.otp = otp
                 user.save()
-                return JsonResponse({'message': 'OTP sent to your phone number'})
+                return JsonResponse({'message': 'OTP sent to your registered phone number'})
         return JsonResponse({'error': 'Invalid phone number'})
     return JsonResponse({'error': 'Invalid request'})
 
@@ -100,7 +112,6 @@ def logout_user(request):
     logout(request)
     return redirect('/')
 
-@login_required(login_url='login')
 def changePassword(request):
     return render(request, 'app/registration/changePassword.html')
 
