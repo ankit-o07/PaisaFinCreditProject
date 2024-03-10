@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json, time
 from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.crypto import get_random_string
+from django.urls import reverse
 
 def index(request):
     return render(request, 'app/index.html')
@@ -76,7 +78,6 @@ def login_user(request):
 
 def forgot_password(request):
     if request.method == 'POST':
-        # print("request.POST", request.POST, "\n\n")
         otp = request.POST.getlist('otp')[0]
         phone = request.POST.getlist('phone')[0]
         user = User.objects.filter(phone=phone).first()
@@ -84,7 +85,12 @@ def forgot_password(request):
             messages.error(request, "OTP expired, please request for another OTP")
             return redirect('forgotpassword')
         if user and user.otp == str(otp):
-            return redirect('changepassword')
+            token = get_random_string(32)
+            user.token = token
+            user.save()
+            request.session['otptoken'] = token
+            password_reset_url = reverse('changepassword', kwargs={'tk': token, 'p': phone})
+            return redirect(password_reset_url)
         else:
             messages.error(request, "OTP does not match")
     
@@ -112,8 +118,27 @@ def logout_user(request):
     logout(request)
     return redirect('/')
 
-def changePassword(request):
-    return render(request, 'app/registration/changePassword.html')
+def password_reset(request, tk, p):
+    otptoken = request.session.get('otptoken', None)
+
+    if otptoken != tk:
+        messages.error(request, "Invalid token")
+        return redirect('forgotpassword')
+    
+    if p.isdigit() and len(p) == 10:
+        user = User.objects.filter(phone=p).first()
+        if user and user.token == tk == otptoken:
+            if request.method == 'POST':
+                password = request.POST.getlist('password')[0]
+                user.set_password(password)
+                user.token = None
+                request.session.pop('otptoken', None)
+                user.save()
+                messages.success(request, "Password changed successfully")
+                return redirect('login')
+            return render(request, 'app/registration/changePassword.html')
+    return redirect('forgotpassword')
+
 
 @login_required(login_url='login')
 def address(request):
