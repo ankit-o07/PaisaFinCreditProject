@@ -95,7 +95,7 @@ def loanApplicationNego(request, id):
         else: 
             
             messages.error(request,"Error ")
-    return redirect('cadmin:dbb')
+    return redirect('dbb')
 
 
 @check_admin
@@ -116,7 +116,7 @@ def personal_remark(request,id,lid):
             
             messages.error(request,"Error ")
 
-    return redirect('cadmin:dbb')
+    return redirect('dbb')
     
 
 @check_admin
@@ -138,7 +138,7 @@ def address_remark(request,id,lid):
             messages.error(request,"Error ")
             
            
-    return redirect('cadmin:dbb')
+    return redirect('dbb')
 
     
 
@@ -158,7 +158,7 @@ def bank_remark(request, id,lid):
             return redirect(reverse('cadmin:details', kwargs={'id': lid}))
         
     
-    return redirect('cadmin:dbb')
+    return redirect('dbb')
     
             
 
