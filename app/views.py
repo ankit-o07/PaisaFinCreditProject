@@ -13,7 +13,10 @@ from django.utils.crypto import get_random_string
 from django.urls import reverse
 from .utility import send_otp_to_phone
 
+from .decorator import check_address_detail , check_bank_detail , check_personal_detail 
+
 def index(request):
+    
     return render(request, 'app/index.html')
 
 def register_user(request):
@@ -42,6 +45,7 @@ def register_user(request):
     return render(request, 'app/registration/register.html', {'user_form': user_form, 'personal_detail_form': personal_detail_form})
 
 @login_required(login_url='login')
+@check_personal_detail
 def register_com(request):
     user = request.user
     user_detail = PersonalDetails.objects.filter(user=user.id).first() 
@@ -51,6 +55,7 @@ def register_com(request):
         if personal_details_form.is_valid():
             personal_detail = personal_details_form.save(commit=False)
             personal_detail.user = user
+            personal_detail.first_time = True
             
             personal_detail.save()
             messages.success(request, "Personal details saved successfully")
@@ -148,6 +153,7 @@ def password_reset(request, tk, p):
 
 
 @login_required(login_url='login')
+@check_address_detail
 def address(request):
     user = request.user
     address_details = AddressDetails.objects.filter(user=user.id).first()
@@ -158,6 +164,7 @@ def address(request):
         if address_form.is_valid(): 
             address_instance = address_form.save(commit=False)
             address_instance.user = user
+            address_instance.first_time = True
             address_instance.save()
 
             messages.success(request, "Address details added successfully")
@@ -167,6 +174,7 @@ def address(request):
     return render(request, 'app/registration/address.html', context)  
 
 @login_required(login_url='login')
+@check_bank_detail
 def bankDetail(request):
     user = request.user
     bank_details = BankDetails.objects.filter(user=user.id).first()
@@ -176,6 +184,7 @@ def bankDetail(request):
         if bank_form.is_valid():
             bank_instance = bank_form.save(commit=False)
             bank_instance.user = user
+            bank_instance.first_time = True
             bank_instance.save()
 
             messages.success(request, "Bank details added successfully")

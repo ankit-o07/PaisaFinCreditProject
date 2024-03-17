@@ -76,6 +76,7 @@ def update_bank_details(request):
         return redirect('dashboard-home')
 
 @login_required(login_url="login")
+
 def application(request):
     loan_applications = LoanApplication.objects.filter(user=request.user.id).order_by('-created_at')
 
