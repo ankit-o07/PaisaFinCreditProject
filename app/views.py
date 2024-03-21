@@ -13,7 +13,7 @@ from django.utils.crypto import get_random_string
 from django.urls import reverse
 from .utility import send_otp_to_phone
 
-from .decorator import check_address_detail , check_bank_detail , check_personal_detail 
+from .decorator import first_time_register
 
 def index(request):
     
@@ -45,12 +45,11 @@ def register_user(request):
     return render(request, 'app/registration/register.html', {'user_form': user_form, 'personal_detail_form': personal_detail_form})
 
 @login_required(login_url='login')
-@check_personal_detail
+@first_time_register
 def register_com(request):
     user = request.user
     user_detail = PersonalDetails.objects.filter(user=user.id).first() 
     personal_details_form = PersonalDetailComForm(request.POST or None, instance=user_detail)
-    
     if request.method == 'POST':
         if personal_details_form.is_valid():
             personal_detail = personal_details_form.save(commit=False)
@@ -75,7 +74,7 @@ def login_user(request):
             user = authenticate(phone=phone, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('dashboard-home')
             error = "Incorrect phone number or password "
         else:
             error = "Phone or password cannot be empty"
@@ -153,7 +152,7 @@ def password_reset(request, tk, p):
 
 
 @login_required(login_url='login')
-@check_address_detail
+@first_time_register
 def address(request):
     user = request.user
     address_details = AddressDetails.objects.filter(user=user.id).first()
@@ -174,7 +173,7 @@ def address(request):
     return render(request, 'app/registration/address.html', context)  
 
 @login_required(login_url='login')
-@check_bank_detail
+@first_time_register
 def bankDetail(request):
     user = request.user
     bank_details = BankDetails.objects.filter(user=user.id).first()
