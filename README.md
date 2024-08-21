@@ -11,7 +11,7 @@
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/Nitinsha58/PaisaFinCredit.git
+    git clone https://github.com/ankit-o07/PaisaFinCreditProject.git
     ```
 
 2. Navigate to the project directory:
